@@ -21,7 +21,7 @@ public class ClienteService {
         newCliente.setEmailCliente(clienteRequestDTO.emailCliente());
         newCliente.setEnderecoCliente(clienteRequestDTO.enderecoCliente());
         newCliente.setTelefoneCliente(clienteRequestDTO.telefoneCliente());
-        newCliente.setStatusCliente(clienteRequestDTO.statusCliente());
+        newCliente.setStatusCliente(true);
         newCliente.setDataCadastroCliente(new Date(clienteRequestDTO.dataCadastroCliente()));
         repository.save(newCliente);
         return newCliente;

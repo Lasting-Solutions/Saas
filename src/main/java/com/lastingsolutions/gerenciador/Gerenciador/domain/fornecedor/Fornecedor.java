@@ -34,7 +34,7 @@ public class Fornecedor {
 
     private String siteFornecedor;
 
-    private Integer telefoneFornecedor;
+    private Long telefoneFornecedor;
 
     private Boolean statusFornecedor;
 
