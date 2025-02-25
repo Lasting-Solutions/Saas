@@ -32,9 +32,23 @@ public class Cliente {
 
     private String enderecoCliente;
 
-    private Integer telefoneCliente;
+    private Long telefoneCliente;
 
     private Boolean statusCliente;
 
     private Date dataCadastroCliente;
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "idCliente=" + idCliente +
+                ", nmCliente='" + nmCliente + '\'' +
+                ", cpfCliente='" + cpfCliente + '\'' +
+                ", emailCliente='" + emailCliente + '\'' +
+                ", enderecoCliente='" + enderecoCliente + '\'' +
+                ", telefoneCliente=" + telefoneCliente +
+                ", statusCliente=" + statusCliente +
+                ", dataCadastroCliente=" + dataCadastroCliente +
+                '}';
+    }
 }
