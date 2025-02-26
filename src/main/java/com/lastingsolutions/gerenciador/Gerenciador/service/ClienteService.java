@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ClienteService {
@@ -23,7 +26,38 @@ public class ClienteService {
         newCliente.setTelefoneCliente(clienteRequestDTO.telefoneCliente());
         newCliente.setStatusCliente(true);
         newCliente.setDataCadastroCliente(new Date(clienteRequestDTO.dataCadastroCliente()));
-        repository.save(newCliente);
-        return newCliente;
+        return repository.save(newCliente);
+    }
+
+    public List<Cliente> getAllClientes() {
+        return repository.findAll();
+    }
+
+    public Optional<Cliente> getClienteById(UUID id) {
+        return repository.findById(id);
+    }
+
+    public Cliente updateCliente(UUID id, ClienteRequestDTO clienteRequestDTO) {
+        Optional<Cliente> optionalCliente = repository.findById(id);
+        if (optionalCliente.isPresent()) {
+            Cliente existingCliente = optionalCliente.get();
+            existingCliente.setNmCliente(clienteRequestDTO.nmCliente());
+            existingCliente.setCpfCliente(clienteRequestDTO.cpfCliente());
+            existingCliente.setEmailCliente(clienteRequestDTO.emailCliente());
+            existingCliente.setEnderecoCliente(clienteRequestDTO.enderecoCliente());
+            existingCliente.setTelefoneCliente(clienteRequestDTO.telefoneCliente());
+            existingCliente.setStatusCliente(true);
+            existingCliente.setDataCadastroCliente(new Date(clienteRequestDTO.dataCadastroCliente()));
+            return repository.save(existingCliente);
+        }
+        throw new RuntimeException("Cliente não encontrado!");
+    }
+
+    public void deleteCliente(UUID id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new RuntimeException("Cliente não encontrado!");
+        }
     }
 }
