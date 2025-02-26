@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class FornecedorService {
@@ -25,7 +28,42 @@ public class FornecedorService {
         newFornecedor.setStatusFornecedor(fornecedorRequestDTO.statusFornecedor());
         newFornecedor.setDataCadastroFornecedor(new Date(fornecedorRequestDTO.dataCadastroFornecedor()));
 
-        repository.save(newFornecedor);
-        return newFornecedor;
+        return repository.save(newFornecedor);
+    }
+
+    public List<Fornecedor> getAllFornecedores() {
+        return repository.findAll();
+    }
+
+    public Optional<Fornecedor> getFornecedorById(UUID id) {
+        return repository.findById(id);
+    }
+
+    public Fornecedor updateFornecedor(UUID id, FornecedorRequestDTO fornecedorRequestDTO) {
+        Optional<Fornecedor> fornecedorOptional = repository.findById(id);
+
+        if (fornecedorOptional.isPresent()) {
+            Fornecedor fornecedor = fornecedorOptional.get();
+            fornecedor.setRazaoSocialFornecedor(fornecedorRequestDTO.razaoSocialFornecedor());
+            fornecedor.setCnpjFornecedor(fornecedorRequestDTO.cnpjFornecedor());
+            fornecedor.setEmailFornecedor(fornecedorRequestDTO.emailFornecedor());
+            fornecedor.setEnderecoFornecedor(fornecedorRequestDTO.enderecoFornecedor());
+            fornecedor.setSiteFornecedor(fornecedorRequestDTO.siteFornecedor());
+            fornecedor.setTelefoneFornecedor(fornecedorRequestDTO.telefoneFornecedor());
+            fornecedor.setStatusFornecedor(fornecedorRequestDTO.statusFornecedor());
+            fornecedor.setDataCadastroFornecedor(new Date(fornecedorRequestDTO.dataCadastroFornecedor()));
+
+            return repository.save(fornecedor);
+        } else {
+            throw new RuntimeException("Fornecedor não encontrado!");
+        }
+    }
+
+    public void deleteFornecedor(UUID id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new RuntimeException("Fornecedor não encontrado!");
+        }
     }
 }
